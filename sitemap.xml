@@ -2,7 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://example.com/2024/10/15/2024LLMs%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E8%AE%B2%E5%BA%A7/</loc>
+    <loc>http://weyumm.github.io/2024/10/15/2024LLMs%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E8%AE%B2%E5%BA%A7/</loc>
+    
+    <lastmod>2024-10-17</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://weyumm.github.io/2024/10/14/hello-world/</loc>
+    
+    <lastmod>2024-10-17</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://weyumm.github.io/link/index.html</loc>
     
     <lastmod>2024-10-15</lastmod>
     
@@ -11,25 +29,7 @@
   </url>
   
   <url>
-    <loc>http://example.com/2024/10/14/hello-world/</loc>
-    
-    <lastmod>2024-10-15</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://example.com/link/index.html</loc>
-    
-    <lastmod>2024-10-15</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://example.com/categories/index.html</loc>
+    <loc>http://weyumm.github.io/categories/index.html</loc>
     
     <lastmod>2024-10-14</lastmod>
     
@@ -38,7 +38,7 @@
   </url>
   
   <url>
-    <loc>http://example.com/tags/index.html</loc>
+    <loc>http://weyumm.github.io/tags/index.html</loc>
     
     <lastmod>2024-10-14</lastmod>
     
@@ -48,8 +48,8 @@
   
 
   <url>
-    <loc>http://example.com/</loc>
-    <lastmod>2024-10-15</lastmod>
+    <loc>http://weyumm.github.io/</loc>
+    <lastmod>2024-10-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
