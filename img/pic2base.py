@@ -7,7 +7,7 @@ def image_to_base64(image_path):
         return base64.b64encode(image_file.read()).decode('utf-8')
 
 # 生成包含Base64图片的Markdown代码并保存为txt文件
-def generate_markdown_with_base64(image_path, title="西瓜书笔记——周志华"):
+def generate_markdown_with_base64(image_path, title="aigc"):
     # 获取图片的文件名（不带扩展名）和扩展名
     image_name = os.path.splitext(os.path.basename(image_path))[0]
     image_extension = os.path.splitext(image_path)[1].replace('.', '')
@@ -29,5 +29,5 @@ def generate_markdown_with_base64(image_path, title="西瓜书笔记——周志
     print(f"Markdown代码已生成并保存至: {output_path}")
 
 # 示例调用
-image_path = r"D:\Hexo-Blog\blog-demo\source\img\article001\nobelprize.jpg" # 例如：C:/path/to/image/watermelon.png
+image_path = r"D:\Hexo-Blog\blog-demo\source\img\article001\AIGC.png" # 例如：C:/path/to/image/watermelon.png
 generate_markdown_with_base64(image_path)
