@@ -1,0 +1,746 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>【千工万材】机械工程材料笔记 | Weyumm的博客</title><meta name="author" content="Zhanghengzhen"><meta name="copyright" content="Zhanghengzhen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="A1-机械零件的失效分析 (后面会优化前端，设置这样的高亮色块，强化重点哦~)臣亮言：先帝创业未半，而中道崩殂。今天下三分，益州疲敝，此诚危急存亡之秋也！然侍衞之臣，不懈于内；忠志之士，忘身于外者，盖追先帝之殊遇，欲报之于陛下也。诚宜开张圣听，以光先帝遗德，恢弘志士之气；不宜妄自菲薄，引喻失义，以塞忠谏之路也。宫中、府中，俱为一体；陟罚臧否，不宜异同。若有作奸、犯科，及为忠善者，宜付有司，论其刑赏">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【千工万材】机械工程材料笔记">
+<meta property="og:url" content="http://weyumm.github.io/2024/11/02/3,%E6%9C%BA%E6%A2%B0%E5%B7%A5%E7%A8%8B%E6%9D%90%E6%96%99%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Weyumm的博客">
+<meta property="og:description" content="A1-机械零件的失效分析 (后面会优化前端，设置这样的高亮色块，强化重点哦~)臣亮言：先帝创业未半，而中道崩殂。今天下三分，益州疲敝，此诚危急存亡之秋也！然侍衞之臣，不懈于内；忠志之士，忘身于外者，盖追先帝之殊遇，欲报之于陛下也。诚宜开张圣听，以光先帝遗德，恢弘志士之气；不宜妄自菲薄，引喻失义，以塞忠谏之路也。宫中、府中，俱为一体；陟罚臧否，不宜异同。若有作奸、犯科，及为忠善者，宜付有司，论其刑赏">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://weyumm.github.io/img/article002/cover002.png">
+<meta property="article:published_time" content="2024-11-02T08:11:10.000Z">
+<meta property="article:modified_time" content="2024-11-02T14:05:31.695Z">
+<meta property="article:author" content="Zhanghengzhen">
+<meta property="article:tag" content="tech">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://weyumm.github.io/img/article002/cover002.png"><link rel="shortcut icon" href="/img/Fairy.jpg"><link rel="canonical" href="http://weyumm.github.io/2024/11/02/3,%E6%9C%BA%E6%A2%B0%E5%B7%A5%E7%A8%8B%E6%9D%90%E6%96%99%E7%AC%94%E8%AE%B0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【千工万材】机械工程材料笔记',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2024-11-02 22:05:31'
+}</script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Weyumm的博客" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-color: #f8f8f8;"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 仓库</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/article002/fe3c.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/Fairy.jpg" alt="Logo"><span class="site-name">Weyumm的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">【千工万材】机械工程材料笔记</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 仓库</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">【千工万材】机械工程材料笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-11-02T08:11:10.000Z" title="发表于 2024-11-02 16:11:10">2024-11-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-11-02T14:05:31.695Z" title="更新于 2024-11-02 22:05:31">2024-11-02</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="A1-机械零件的失效分析"><a href="#A1-机械零件的失效分析" class="headerlink" title="A1-机械零件的失效分析"></a>A1-机械零件的失效分析</h1><hr>
+<p>(后面会优化前端，设置这样的高亮色块，强化重点哦~)臣亮言：<mark class="hl-label default">先帝</mark>创业未半，而<mark class="hl-label blue">中道崩殂</mark>。今天下三分，<mark class="hl-label pink">益州疲敝</mark>，此诚<mark class="hl-label red">危急存亡之秋</mark>也！然侍衞之臣，不懈于内；<mark class="hl-label purple">忠志之士</mark>，忘身于外者，盖追先帝之殊遇，欲报之于陛下也。诚宜开张圣听，以光先帝遗德，恢弘志士之气；不宜妄自菲薄，引喻失义，以塞忠谏之路也。<br>宫中、府中，俱为一体；陟罚臧否，不宜异同。若有<mark class="hl-label orange">作奸</mark>、<mark class="hl-label green">犯科</mark>，及为忠善者，宜付有司，论其刑赏，以昭陛下平明之治；不宜偏私，使内外异法也。</p>
+<h2 id="一、选择题"><a href="#一、选择题" class="headerlink" title="一、选择题"></a>一、选择题</h2><p>1．表示金属材料屈服强度的符号是（B ）。</p>
+<p>A.σ B.σs C.σb D.σ-1</p>
+<p>σs 表示屈服强度，即材料在屈服点时的应力。屈服强度是衡量金属材料在塑性变形前所能承受的最大应力。【书P4,,PPT1.2.1】</p>
+<p>2．材料的使用温度（ A ）。</p>
+<p>A.应在其韧脆转变温度以上 B.应在其韧脆转变温度以下</p>
+<p>C.应与其韧脆转变温度相等 D.与其韧脆转变温度无关</p>
+<p>韧脆转变温度以下，材料可能表现出脆性，容易发生断裂。为了确保材料具有良好的韧性和延展性，使用温度应高于其韧脆转变温度。【书P10,PPT1.3.2】</p>
+<p>3.在测量金属薄片的硬度时，常用的硬度测试方法的表示符号是（C）。</p>
+<p>A.HB B.HR C.HV D.HS</p>
+<p>维氏硬度（HV）由于其压痕小，适合用于测量薄片金属材料的硬度。相比之下，布氏硬度（HBW）和洛氏硬度（HRC）在薄片材料上应用受限。【书P6,PPT1.2.3】</p>
+<p>4.金属材料在静载荷作用下抵抗塑性变形和断裂的能力叫（A  ）。</p>
+<p>A.强度 B.硬度 C.塑性 D.弹性</p>
+<p>强度是材料在静载荷下抵抗塑性变形和断裂的能力，是衡量材料承载能力的重要指标。【书上P4,PPT1.2.1】</p>
+<p>金属材料由于受到外力的作用而产生的形状改变称为（ B ）。<br>A.弯曲 B.变形 C.受力 D.破坏</p>
+<p>变形指的是材料在外力作用下形状发生改变的过程，包括弹性变形和塑性变形。【书上P4,PPT1.2.1】</p>
+<p>6.在不更换材料的情况下，有一碳钢支架刚性不足，解决的办法是（ C ）。</p>
+<p>A.通过热处理强化 B.选用合金钢 C.增加横截面积 D.在冷加工状态下使用</p>
+<p>在不更换材料的前提下，通过增加支架的横截面积可以有效提高其刚性。横截面积增大后，材料的抗弯刚度和抗扭刚度都会增强，从而提高整体结构的刚性。【书上P5,PPT1.2.2】</p>
+<h2 id="二、填空题"><a href="#二、填空题" class="headerlink" title="二、填空题"></a>二、填空题</h2><p>1. 金属材料的性能一般分为两类，一类是使用性能，它包括（力学性能（强度、塑性、韧性等） ）、（ 物理性能（密度、导热性、导电性） ）和（ 化学性能、生物性能 ）等，另一类是工艺性能，它包括（ 铸造性能）、（锻造性能）、（焊接性能）、（机械加工性能）和（热处理性能）等。【书P2,PPT工程材料的性能】</p>
+<p>2. 低碳钢拉伸试验的过程可分为弹性变形、（弹塑性变形）、（塑性变形）和（断裂）四个阶段。【书P5,PPT1.2.1】</p>
+<p>3. 零件的表面加工质量对其（疲劳）性能有很大影响。【书P14,PPT1.3.5】</p>
+<p>4. 如果零件工作时所受的应力低于材料的（屈服强度）或（条件屈服强度），则不会产生过量的塑性变形。【书P8,PPT1.2.4】</p>
+<p>5. 材料常用的塑性指标有（延伸率）和（断面收缩率）两种；其中用（断面收缩率）表示塑性更接近材料的真实变形能力。【书P6,PPT1.2.1】</p>
+<p>6. 检验淬火钢成品件的硬度一般用（洛氏）硬度，而布氏硬度适用于测定（灰铸铁、有色金属退火钢、调质钢）的硬度。【书P6,PPT1.2.3】</p>
+<p>7. 表征材料抵抗冲击载荷能力的性能指标是（冲击韧性）。【书P10,PPT1.3.2】</p>
+<h2 id="三、判断题"><a href="#三、判断题" class="headerlink" title="三、判断题"></a>三、判断题</h2><p>1. 静态工况下零件在工作中所承受的应力超过抗拉强度时会产生断裂。  （√）</p>
+<p>在静态工况下，当零件所受的应力超过其材料的抗拉强度时，材料无法承受过大的拉应力，导致发生断裂。【书P5,PPT1.2.1】</p>
+<p>所有的金属材料都有明显的屈服现象。  （ x）</p>
+<p>并非所有金属材料都表现出明显的屈服现象。例如，铝及其合金在拉伸过程中通常表现为延展性较好的线性变形，没有明显的屈服点。【书P5,PPT1.2.1,但这是材料力学知识点】</p>
+<p>金属材料的塑性越好，变形抗力越小，其锻造性能越好。  （√）</p>
+<p>塑性好的金属材料在加工过程中更容易发生形变，所需的变形抗力较小，因而锻造性能更佳，便于制造复杂形状的工件。【书P8,PPT1.2.4】</p>
+<p>含碳量越高的钢，其焊接性能越好。  （ x）</p>
+<p>含碳量越高的钢，其硬度和脆性通常增加，焊接时更容易产生裂纹和其他缺陷，因此高碳钢的焊接性能较差。【书P9,,PPT1.3.1,,PPT1.3.4】</p>
+<p>经研磨后的零件，抗蚀性和疲劳强度相应得到提高。 ? ? ?   （√）</p>
+<p>研磨可以改善零件的表面光洁度，可能对疲劳强度有一定的提升作用，但抗蚀性主要取决于材料的化学成分和表面处理，研磨本身并不一定提高抗蚀性，甚至可能引入表面缺陷，降低抗蚀性能。【PPT1.6.2】这是对的</p>
+<p>材料的屈服强度越低，则允许的工作应力越高。  （ x）</p>
+<p>材料的允许工作应力通常是屈服强度的一部分。屈服强度越低，允许的工作应力也应相应降低，以避免材料发生塑性变形或失效。【材料力学——许用应力】</p>
+<p>同一种材料做成不同尺寸的试样所测得的伸长率相同。   （x）</p>
+<p>不同。 【没找到出处】</p>
+<p>铸铁的铸造性能比钢好，所以常用来铸造形状复杂的工件。  ？ ？ ？ （√）</p>
+<p>铸铁具有较好的流动性和较低的收缩率，使其在铸造复杂形状工件时更为适用，因此常用于制造形状复杂的铸件。</p>
+<p>疲劳强度是表示在冲击载荷作用下而不致引起断裂的最大应力。  （ x）</p>
+<p>疲劳强度是指材料在循环载荷（重复应力）作用下，经受一定次数循环而不发生断裂的最大应力。它与单次的冲击载荷无关。【书P14,PPT1.3.5】</p>
+<p>渗碳件经淬火处理后用HB硬度计测量表层硬度。  （ x）</p>
+<p>渗碳后淬火处理的工件表层硬度通常较高，适合使用洛氏硬度（HR）或维氏硬度（HV）计进行测量。布氏硬度（HB）计适用于较软的材料，难以准确测量高硬度的淬火层。【书P6,PPT1.2.3】</p>
+<p>硬度越低，金属的切削加工性越好。  （x）</p>
+<p>？？？硬度低的金属材料较软，切削加工时所需的切削力较小，刀具磨损较少，因此其切削加工性较好。【材料力学】</p>
+<p>金属材料的力学性能差异是由其内部组织结构所决定的。  （√）</p>
+<p>金属材料的力学性能（如强度、塑性、韧性等）主要由其内部的晶粒大小、相组成、相分布及缺陷等微观组织结构决定，不同的组织结构会导致材料性能的显著差异。【第二章】</p>
+<h2 id="四、计算题"><a href="#四、计算题" class="headerlink" title="四、计算题"></a>四、计算题</h2><p>1.将6500N的力施加于直径为10mm，屈服强度为520MPa的钢棒上，试计算并说明钢棒是否会产生塑性变形。</p>
+<p>综上，钢棒在施加6500 N的力下，所受应力未超过其屈服强度，不会产生塑性变形。</p>
+<p>某厂购进一批25号钢，按国家标准规定，25钢力学性能指标应符合下列数值：屈服强度σs≥257MPa，</p>
+<p>抗拉强度σb≥450MPa，延伸率δ≥23%，断面收缩率ψ≥50%。验收时，将25钢制成直径为d＝10mm的短圆棒试样做拉伸试验，测得拉伸变形过程中发生屈服时的载荷Fs=21980N，断裂时的载荷为Fb=36890N，试样长度由初始50mm变为62.5mm，拉伸后试样直径为d＝6.9mm。试判断这批钢材是否合格。</p>
+<p>Step4 对比国家标准</p>
+<p>屈服强度： 实测 279.7MPa≥257MPa ✔；抗拉强度： 实测987.7MPa≥450MPa ✔；延伸率： 实测 25%≥23% ✔；断面收缩率： 实测 52.0%≥50% ✔</p>
+<p>综上所述，该批25号钢的力学性能指标均符合国家标准要求，合格。</p>
+<h2 id="五、简答题"><a href="#五、简答题" class="headerlink" title="五、简答题"></a>五、简答题</h2><p>1.塑性和强度都是金属材料的一种能力，金属材料的塑性对零件制造有什么意义？金属材料的强度对零件使用有什么意义？</p>
+<p>答:(1)需要通过变形方式加工成型的工件，必须具有良好的塑性。(2)塑性好的零件过载时会发生一定量的塑性变形，而不至于像脆性材料那样突然断裂。(3)塑性好的工件，可通过应力集中处的塑性变形削减应力集中的程度，这对工件安全使用是很有益的。(4)材料的韧性是由强度和塑性共同决定的，可通过强度和塑性指标间接了解材料的韧性。</p>
+<p>强度是金属材料在设计和使用中的主要依据和重要指标。工件工作时所受应力低于屈服强度或条件屈服强度就不会产生过量的塑性变形，保证正常工作，工件工作时所受应力不能超过其抗拉强度，否则会产生断裂。</p>
+<p>为什么硬度试验比拉伸试验在生产中更实用？</p>
+<p>答:硬度试验简单方便，不需做标准试样即可直接从硬度计上读取数值:拉伸试验则需要做标准试样测定数据后，要进行计算。比较麻烦。</p>
+<hr>
+<h1 id="A2-金属的晶体结构与结晶习题"><a href="#A2-金属的晶体结构与结晶习题" class="headerlink" title="A2-金属的晶体结构与结晶习题"></a>A2-金属的晶体结构与结晶习题</h1><hr>
+<p>名词解释：金属键、晶体、晶格、晶胞、结晶、单晶体、体错、晶粒、晶界、过冷度 </p>
+<h2 id="一、选择题-1"><a href="#一、选择题-1" class="headerlink" title="一、选择题"></a>一、选择题</h2><p>1. 体心立方晶胞中包含有（ B ）个原子，面心立方晶胞中包含有（ D ）个原子。</p>
+<p>A.1 B.2 C.3 D.4</p>
+<p>体心立方（BCC）晶胞每个单位胞包含 2个原子（8个角原子各占1&#x2F;8，1个体心原子）。面心立方（FCC）晶胞每个单位胞包含 4 个原子（8个角原子各占1&#x2F;8，6个面心原子各占1&#x2F;2）。</p>
+<p>2. 属于面心立方晶格的金属有（ C ）。属于体心立方晶格的金属有（ A）。</p>
+<p>A.α-Fe  B.β-Fe δ-Fe？ C.γ-Fe</p>
+<p>3. 在晶体缺陷中，属于点缺陷的有（ A ）。</p>
+<p>A.间隙原子  B.位错  C.晶界  D.缩孔</p>
+<p>点缺陷包括空位、间隙原子和置换原子。位错属于线缺陷，晶界和缩孔属于面缺陷。【书P42，PPT2.1.5】</p>
+<ol start="4">
+<li>金属在结晶时，冷却速度越快，其实际结晶温度越低，则（ A ）。</li>
+</ol>
+<p>A.过冷度越大，晶粒越细  B.过冷度越大，晶粒越粗</p>
+<p>C.过冷度越小，晶粒越细  </p>
+<p>冷却速度快导致过冷度增加，促进更多的成核，从而形成细小晶粒。【书P40，PPT2.1.1】 </p>
+<ol start="5">
+<li>实际金属结晶时，可通过控制形核率N和成长速率G的比值来控制晶粒大小，要获得细晶粒，应采用（ A ）。</li>
+</ol>
+<p>A.增大N／G值  B.减小N／G值</p>
+<p>C.使N／G值保待不变  D.使N／G值先增大后减小</p>
+<p>细晶粒需要高形核率（N）和低成长速率（G），即增N&#x2F;G比值。</p>
+<ol start="6">
+<li>通常铸锭可由三个不同外形的晶粒区所组成，其晶粒区从表面到中心的排列顺序为（ A ）。</li>
+</ol>
+<p>A.细晶粒区一柱状晶粒区一等轴晶粒区   B.细晶粒区一等轴晶粒区一柱状晶粒区</p>
+<p>C.等轴晶区一细晶粒区一柱状晶粒区  D.等轴晶粒区一柱状晶粒区一细晶粒区</p>
+<p>表面区域冷却快，形成细晶粒区；中间区域形成等轴晶粒区；中心区域由于冷却慢，形成柱状晶粒区。【书P64，PPT2.5】</p>
+<p>7. 把在实际晶体中出现的（ C ）缺陷叫做面缺陷。</p>
+<p>A.刃型位错和螺型位错  B.空位、间隙原子  C.晶界、亚晶界 </p>
+<p>面缺陷指的是延伸在晶体平面上的缺陷，如晶界和亚晶界；刃型位错和螺型位错是线缺陷，空位、间隙原子是点缺陷。【书P42，PPT2.1.5】</p>
+<h2 id="二、填空题-1"><a href="#二、填空题-1" class="headerlink" title="二、填空题"></a>二、填空题</h2><p>一切固态物质可以分为（ 晶体 ）与（ 非晶体 ）两大类。</p>
+<p>晶体缺陷中的点缺陷除了置换原子还有（ 空位 ）和（ 间隙原子 ）。【书P42，PPT2.1.5】</p>
+<p>实际全属中存在（ 点缺陷 ）、（ 线缺陷 ）和（ 面缺陷 ）三类缺陷，位错是（ 线缺陷 ）、晶界是（ 面缺陷 ）、晶体缺陷的存在都会造成（ 晶格畸变 ），使（ 变形抗力 ）增大，从而使金属的（ 强度、硬度 ）提高。</p>
+<p>点缺陷、线缺陷和面缺陷是三类基本晶体缺陷，位错属于线缺陷，晶界属于面缺陷；晶体缺陷引起晶格畸变，导致屈服强度增大，金属强度提高。【书P42，PPT2.1.5】</p>
+<p>同非金属相比。金属的主要特性是（ 原子规则排列、有固定熔点、具有各向异性）。</p>
+<p>全属的晶粒越细小，晶界总面积就越（ 大 ），金属的强度也就越（ 高 ）。</p>
+<p>细小晶粒增加了晶界总面积，根据Hall-Petch关系，金属强度提高。【PPT2.1.5细晶强化】</p>
+<p>金属的结晶过程主要由（形核（晶核的形成））和（生长（晶核的长大））两个基本过程组成。【书P69】</p>
+<p>全属结晶过程中，细化晶粒的主要方法有（ 增加过冷度 ）、（ 振动处理）和（ 变质处理 ）。</p>
+<p>【PPT2.1.5细晶强化】</p>
+<p>· 提高冷却速度：快速冷却促进成核、抑制晶粒生长，生成细小晶粒。</p>
+<p>· 加入形核剂：通过外加颗粒增加成核点，阻止晶粒的过度生长。</p>
+<p>· 振动或降低成长速率：通过振动破坏晶粒结构，降低晶粒成长速率，细化晶粒。</p>
+<p>在金属结晶过程中，细化晶粒是提高材料力学性能（如强度、韧性和硬度）的重要手段。细化晶粒可以通过以下几种方法实现：</p>
+<p>1. 提高冷却速度</p>
+<p>原理：快速冷却使金属中的温度迅速降低，从而增加了液态金属中形成晶核的数量，减少了晶粒的成长时间。</p>
+<p>效果：当冷却速度较快时，液态金属中更多的晶核能在短时间内形成，促使晶粒在初期迅速成核。由于温度降低速度快，晶核成长的时间较短，从而限制了晶粒的尺寸，生成细小的晶粒。</p>
+<p>应用场景：快速冷却通常通过水淬、油淬或空气冷却等方法实现。常用于铸造、焊接以及热处理工艺中。</p>
+<p>2. 加入形核剂</p>
+<p>原理：形核剂（或称细晶剂）是一些外加的细小颗粒，能够在液态金属中提供额外的成核点，促使更多的晶核生成。</p>
+<p>效果：形核剂在金属液中充当异质成核的中心，减少了金属成核所需的能量，从而促进更多晶核的形成。晶核的增加会阻止单个晶粒的过度生长，从而细化整体的晶粒结构。</p>
+<p>常用形核剂：例如，加入铝、钛或硼等元素作为形核剂，以便在特定合金中细化晶粒。</p>
+<p>应用场景：铸造、冶炼过程中，形核剂广泛应用于细化晶粒，提高铝合金、铜合金、钢等材料的强度和韧性。</p>
+<p>3. 振动或降低成长速率</p>
+<p>原理：在金属结晶过程中对金属液进行机械振动，可以破碎已形成的大晶粒，使其再结晶，生成更细小的晶粒。减慢晶粒的成长速率，能抑制晶粒的过度增长，从而获得细小的晶粒结构。</p>
+<p>效果：通过机械振动（如超声波振动、低频机械振动），可以破坏晶粒结构，诱导金属再结晶，细化晶粒。振动还有助于改善成分均匀性和减少孔隙缺陷。通过控制温度梯度、减缓冷却速率或在成核阶段保持温度稳定，可以抑制晶粒的快速成长，形成均匀的细晶粒结构。</p>
+<p>应用场景：振动技术在金属铸造过程中应用广泛，如振动铸造工艺。在焊接时也可通过振动技术减小焊缝的晶粒尺寸。此外，降低成长速率常用于金属热处理工艺中。</p>
+<p>金属材料经过压力加工变形后，不仅改变了（金属材料外形），而且改变了（金属材料性能）。</p>
+<p>压力加工导致晶粒形状变化和位错密度增加，增强金属强度。【书P65，PPT2.7.1】</p>
+<p>金属在结晶过程中，冷却速度越大，则过冷度越（ 大 ），晶粒越（细小），强度越（ 高 ），塑性和韧性越（ 好 ）。</p>
+<p>高冷却速度导致高过冷度，促进细晶粒形成，提升金属强度，同时塑性和韧性得到改善。【书P39，ppt2.1.1】</p>
+<p>为了使金属结晶过程得以进行，结晶时必须具有一定的（ 过冷度 ），它是理论结晶温度与（ 实际结晶温度 ）之间的差值。【书P39，ppt2.1.1】</p>
+<p>弹性变形的本质是外力克服（ 原子间的相互作用力 ），使原子间距发生改变。</p>
+<p>原子呈无序堆积状况的物体叫（ 非晶体 ），原子呈有序、有规则排判的物体称为（ 晶体 ）。一般固态全属都属于（ 晶体 ）。</p>
+<p>在晶体中由一系列原子组成的平面，称为（ 晶面 ）。通过两个或两个以上原子中心的直线，可代表晶格空间排列的（ 方向 ）的直线，称为（ 晶线 ）。</p>
+<p>常见的金属晶格类型有（ 体心立方 ）、（ 面心立方 ）和（ 六方密堆积 ）三种，铬属于（ 体心立方 ）晶格。铜属于（ 面心立方 ）晶格。锌属于（ 六方密堆积 ）晶格。</p>
+<p>常见晶格类型包括面心立方（FCC）体心立方（BCC）和六方密堆积（HCP）：铬（Cr）体心立方（BCC）；铜（Cu）面心立方（FCC）；锌（Zn）六方密堆积（HCP）</p>
+<p>纯金属的冷却曲线是用（热分析）法测定的。冷却曲线的纵坐标表示（温度），横坐标表示（时间）。</p>
+<p>过冷度的大小与（ 冷却速度 ）有关，（ 冷却速度 ）越快，金属的实际结晶温度越（ 低 ），过冷度也就越大。</p>
+<p>冷却速度快导致实际结晶温度显著低于理论结晶温度，即过冷度增大。</p>
+<p>细化晶粒的根本途径是控制结晶时（ 形核率 ）及（ 晶核长大速率 ）。</p>
+<p>细晶粒的形成依赖于高形核率和低成长速率，通过控制这两个参数实现晶粒细化。</p>
+<h3 id="三、判断题-1"><a href="#三、判断题-1" class="headerlink" title="三、判断题"></a>三、判断题</h3><p>因为面心立方晶格的原子数大于体心立方晶格的原子数，所以面心立方晶格比体心立方晶格更致密。</p>
+<p>（ √ ）面心立方（FCC）晶格的原子数4多于体心立方（BCC）的2，且FCC的堆积因子更高，致密度更大。</p>
+<p>因为单晶体是各向异性的，所以实际应用的金属材料在各个方向上的性能也是不相同的。  （ x ）</p>
+<p>在任何情况下，铁及其合金都是体心立方晶格。  （ x ）</p>
+<p>铁在不同温度下具有不同的晶格结构，如γ-Fe在高温下为面心立方（FCC）结构。</p>
+<p>晶体缺陷的共同之处是它们都能引起晶格畸变。  （√）</p>
+<p>凡是液体凝固成固体的过程都是结晶过程。    ( x )</p>
+<p>纯金属的实际结晶温度与其冷却速度有关。  ( √ )</p>
+<p>冷却速度影响过冷度，进而影响实际结晶温度。理论结晶温度是固有属性</p>
+<p>金属材料的力学性能差异是由其内部组织结构决定的。  ( √ )</p>
+<p>晶粒粗大的金属比晶粒细小的抗塑变能力强。  ( x )</p>
+<p>细晶粒通常具有更高的强度和抗塑性，根据Hall-Petch关系，晶粒越细小，强度越高。</p>
+<p>金属的实际结晶温度均低于理论结晶温度。  ( √ )</p>
+<p>金属结晶时过冷度越大，结晶后晶粒越粗。  ( x )</p>
+<p>较大的过冷度促进更多的成核，形成细小晶粒。</p>
+<p>一般说，晶粒越细小，金属材料的力学性能越好。  ( √ )</p>
+<p>细小晶粒增加了晶界面积，阻碍位错运动，提高金属的强度和韧性。</p>
+<h2 id="四、简答题"><a href="#四、简答题" class="headerlink" title="四、简答题"></a>四、简答题</h2><p>1.试述晶粒大小对其力学性能的影响。</p>
+<p>由于晶界上存在晶格畸变，因而在室温下对金属材料的塑性变形起着阻碍作用，在宏观上表现为金属材料具有更高的强度和硬度。晶粒越细小分担的变形越小，晶体的变形量就越大，塑性越好，晶界越多裂纹的传播受阻，疲劳强度越好。</p>
+<p>2.生产中细化晶粒的常用办法有哪几种？为什么要细化晶粒？</p>
+<p>有三种:①增加过冷度;②变质处理:3振动处理。</p>
+<p>晶粒越细小，金属材料的力学性能越好，</p>
+<p>3.写出纯铁的同素异构转变式。</p>
+<p>纯铁具有三种主要的同素异构体，分别为 α-铁、γ-铁和 δ-铁。它们在不同的温度下同素异构转变过程为：</p>
+<p>δ-铁 (体心立方 BCC) → γ-铁 (面心立方 FCC)：温度从 1538°C 降低至 1394°C。</p>
+<p>γ-铁 (面心立方 FCC) → α-铁 (体心立方 BCC)：温度从 1394°C 降低至 912°C。</p>
+<p>α-铁 (体心立方 BCC) → 磁性 α-铁：温度从 912°C 降低至室温（770°C 时发生铁的磁性转变）。</p>
+<p>为什么单晶体具有各向异性，而多晶体一般情况下不显示出各向异性？</p>
+<p>由于单晶体各个晶向和晶面上的原子排列数目不同，原子之间的作用力也不同，因而各个方向上表现出的性能也不同，而多晶体是由许多单晶体组成，各个方向上的性能互相抵消，所以不显各向异性。</p>
+<hr>
+<h1 id="A3-铁碳相图"><a href="#A3-铁碳相图" class="headerlink" title="A3- 铁碳相图"></a>A3- 铁碳相图</h1><hr>
+<h2 id="一、选择题-2"><a href="#一、选择题-2" class="headerlink" title="一、选择题"></a>一、选择题</h2><p>1.同素异构转变伴随着体积的变化，其主要原因是（ C ）</p>
+<p>A.晶粒度发生变化 B.过冷度发生变化 C.致密度发生变化 D.溶解度发生变化</p>
+<p>同素异构转变涉及晶体结构的改变，不同晶体结构的致密度不同，导致体积变化。晶粒度、过冷度和溶解度虽可能影响结晶行为，但体积变化主要由致密度变化引起。</p>
+<p>2.奥氏体是碳溶解在（B ）中所形成的间隙固溶体。</p>
+<p>A.α-Fe B.γ-Fe C.δ-Fe D.β-Fe</p>
+<p>3．在Fe-Fe3C相图中，钢与铁的分界点的含碳量为（ C ）。</p>
+<p>A.2% B.2.06% C.2.11% D.2.2%</p>
+<p>在Fe-Fe₃C相图中，2.11%的碳含量是钢与铸铁的分界点。低于2.11%为钢，高于2.11%为铸铁。</p>
+<p>4．莱氏体是一种（ C ）。</p>
+<p>A.固溶体 B.金属化合物 C.机械混合物 D.单相组织 </p>
+<p>莱氏体是奥氏体与渗碳体的机械混合物，不是单相组织或固溶体。它由奥氏体和渗碳体组成，是一种典型的双相组织。</p>
+<p>5．在Fe-Fe3C相图中，ES线也称为（ D ）。</p>
+<p>A.共晶线 B.共析线 C.A3线 D.Acm线</p>
+<p>在Fe-Fe₃C相图中，ES线也称为Acm线，它表示奥氏体和铁素体之间的相界线。其他重要线包括A₁线（共析线）、Acm线（渗碳体析出线）、A₂线（居里点）等，每条线都有其对应的物理意义和命名原因。</p>
+<p>ES线（Acm线）</p>
+<p>命名原因：Acm线表示在铁碳相图中，渗碳体（Fe₃C）开始从奥氏体中析出的温度。在铁碳合金中，当碳含量超过一定值且温度降低到Acm线以下时，奥氏体无法溶解更多的碳，渗碳体（Fe₃C）便会开始从奥氏体中析出，称为二次渗碳体（Fe₃CⅡ）。</p>
+<p>位置和作用：Acm线位于铁碳相图的右上方，在高碳含量区域。它界定了奥氏体（γ-Fe）与奥氏体+渗碳体（γ-Fe + Fe₃C）的共存区域。当温度下降并且碳的质量分数超过Acm线时，渗碳体开始从奥氏体中析出。</p>
+<p>NH线和NJ线（A₄线）：表示在高温下δ铁素体（δ-Fe）与奥氏体（γ-Fe）的相变。A₄线表示纯铁在1394℃时的δ ⇌ γ转变。</p>
+<p>GS线和GP线（A₃线）：表示奥氏体（γ-Fe）与铁素体（α-Fe）的相变。A₃线表示奥氏体在较低温度（910℃以下）转变为铁素体的温度。</p>
+<p>6．在Fe-Fe3C相图中，GS线也称为（ C ）。</p>
+<p>A.共晶线 B.共析线 C.A3线 D.Acm线</p>
+<p>7．在Fe-Fe3C相图中，共析线也称为（D）。</p>
+<p>A.A1线 B.ECF线 C.Acm线 D.PSK线（A1）</p>
+<p>包晶线（HJB线）反应式：δ铁素体 + 液态 → γ奥氏体，温度：1495℃</p>
+<p>描述：包晶转变发生在碳含量为0.09%到0.53%的铁碳合金中。当温度降至1495℃时，液态铁和δ铁素体在恒温下转变为奥氏体，称为包晶反应。J点是包晶点。</p>
+<p>共晶线（ECF线）反应式：液态 → γ奥氏体 + Fe₃C（渗碳体），温度：1148℃</p>
+<p>描述：共晶转变发生在碳含量为2.11%到6.69%的铁碳合金中。当液态冷却至1148℃时，液态铁在恒温下转变为奥氏体和渗碳体的混合物。C点是共晶点，这一反应生成莱氏体（奥氏体+渗碳体）。</p>
+<p>共析线PSK线（A₁线）反应式：γ奥氏体 → α铁素体 + Fe₃C（渗碳体），温度：727℃</p>
+<p>描述：共析转变发生在碳含量为0.0218%到6.69%的铁碳合金中。当温度降至727℃时，奥氏体在恒温下分解为铁素体和渗碳体，形成珠光体。S点是共析点。</p>
+<p>8．珠光体是一种（ C ）。</p>
+<p>A.固溶体 B.金属化合物 C.机械混合物 D.单相组织金属</p>
+<p>珠光体是铁素体和渗碳体的机械混合物，不是单相组织或固溶体。</p>
+<p>9．在铁-碳合金中，当含碳量超过（ C ）以后，钢的硬度虽然在继续增加，但强度却在明显下降。</p>
+<p>A.0.8% B.0.9% C.1.0% D.1.1%</p>
+<p>随着碳质量分数的增加， 强度、硬度增加， 塑性、韧性降低。当wC &gt;1. 0%时， 由于网状Fe3CⅡ出现， 导致钢的强度下降。【书P60】</p>
+<p>10．二元合金中，铸造性能最好的是（ B ）。</p>
+<p>A.固溶体合金 B.共晶合金 C.共析合金 D.匀晶成分合金</p>
+<p>共晶合金具有细小均匀的组织，流动性好，易于铸造，铸造性能最好。【书P61】</p>
+<p>11.Fe-Fe3C相图中，共析线的温度为（ D ）</p>
+<p>A.724℃ B.725℃ C.726℃ D.727℃ </p>
+<p>12．在铁碳合金中，共析钢的含碳量为（ B ）</p>
+<p>A.0.67% B.0.77% C.0.8% D.0.87%</p>
+<p>13．在Fe-Fe3C相图中，PSK线也称为（ B ）</p>
+<p>A.共晶线 B.共析线 C.A3线 D.Acm线</p>
+<p>包晶线（HJB线）反应式：δ铁素体 + 液态 → γ奥氏体，温度：1495℃</p>
+<p>描述：包晶转变发生在碳含量为0.09%到0.53%的铁碳合金中。当温度降至1495℃时，液态铁和δ铁素体在恒温下转变为奥氏体，称为包晶反应。J点是包晶点。</p>
+<p>共晶线（ECF线）反应式：液态 → γ奥氏体 + Fe₃C（渗碳体），温度：1148℃</p>
+<p>描述：共晶转变发生在碳含量为2.11%到6.69%的铁碳合金中。当液态冷却至1148℃时，液态铁在恒温下转变为奥氏体和渗碳体的混合物。C点是共晶点，这一反应生成莱氏体（奥氏体+渗碳体）。</p>
+<p>共析线PSK线（A₁线）反应式：γ奥氏体 → α铁素体 + Fe₃C（渗碳体），温度：727℃</p>
+<p>描述：共析转变发生在碳含量为0.0218%到6.69%的铁碳合金中。当温度降至727℃时，奥氏体在恒温下分解为铁素体和渗碳体，形成珠光体。S点是共析点。</p>
+<p>14．合金固溶强化的主要原因是（ C ）</p>
+<p>A.晶格类型发生了变化 B.晶粒细化 C.晶格发生了畸变</p>
+<p>合金元素溶入基体后引起晶格畸变，阻碍位错运动，从而实现固溶强化。【PPT2.2.2】</p>
+<p>15．铁素体为（ B ）晶格，奥氏体为（ A ）晶格</p>
+<p>A.面心立方 B.体心立方 C.密排六方</p>
+<p>铁素体为体心立方（BCC）晶格，奥氏体为面心立方（FCC）晶格。</p>
+<p>16．渗碳体的含碳量为（ C ）%</p>
+<p>A.0.77 B.2.11 C.6.69</p>
+<p>17．珠光体的平均含碳量为（ A ）%</p>
+<p>A.0.77 B.2.11 C.6.69</p>
+<p>珠光体由铁素体（含碳量约0.02%）和渗碳体（6.69%）组成，平均含碳量约0.77%。</p>
+<p>18．共晶白口铸铁的含碳量为（ B ）%</p>
+<p>A.2.11 B.4.3 C.6.69</p>
+<p>共晶白口铸铁的含碳量为2.11%，位于共晶点。</p>
+<p>19．铁碳合金共晶转变的温度是（ B ）℃</p>
+<p>A.727 B.1148 C.1227</p>
+<p>包晶线（HJB线）反应式：δ铁素体 + 液态 → γ奥氏体，温度：1495℃</p>
+<p>描述：包晶转变发生在碳含量为0.09%到0.53%的铁碳合金中。当温度降至1495℃时，液态铁和δ铁素体在恒温下转变为奥氏体，称为包晶反应。J点是包晶点。</p>
+<p>共晶线（ECF线）反应式：液态 → γ奥氏体 + Fe₃C（渗碳体），温度：1148℃</p>
+<p>描述：共晶转变发生在碳含量为2.11%到6.69%的铁碳合金中。当液态冷却至1148℃时，液态铁在恒温下转变为奥氏体和渗碳体的混合物。C点是共晶点，这一反应生成莱氏体（奥氏体+渗碳体）。</p>
+<p>共析线PSK线（A₁线）反应式：γ奥氏体 → α铁素体 + Fe₃C（渗碳体），温度：727℃</p>
+<p>描述：共析转变发生在碳含量为0.0218%到6.69%的铁碳合金中。当温度降至727℃时，奥氏体在恒温下分解为铁素体和渗碳体，形成珠光体。S点是共析点。</p>
+<p>20．含碳量为1.2％的铁碳合金，在室温下的组织为（ C ）</p>
+<p>A.珠光体 B.珠光体加铁素体 C.珠光体加二次渗碳体</p>
+<p>含碳量1.2%【小于2.11%大于0.77%】的铁碳合金为过共析钢，室温下组织为珠光体加二次渗碳体。</p>
+<p>21．将含碳量为1.5%的铁碳合金加热到650℃时，其组织为（ C ），加热到850℃时其组织为（ D ），加热到1100℃时其组织为（ B ）</p>
+<p>A.珠光体 B.奥氏体 C.珠光体加渗碳体 D.奥氏体加渗碳体</p>
+<p>1. 650℃时，含碳量1.5%的铁碳合金的组织为：650℃低于共析温度（727℃），此时合金处于固态，且碳含量为1.5%，属于过共析钢。由于此时的温度低于共析点温度，因此奥氏体已经分解为珠光体（铁素体 + 渗碳体）和渗碳体。组织：珠光体加渗碳体</p>
+<p>2. 850℃时，含碳量1.5%的铁碳合金的组织为：850℃处于共析温度（727℃）与共晶温度（1148℃）之间。对于1.5%的碳含量合金来说，该温度范围内组织主要为奥氏体和渗碳体。在这个温度下，合金仍然含有未溶的渗碳体。组织：奥氏体加渗碳体</p>
+<p>3. 1100℃时，含碳量1.5%的铁碳合金的组织为：1100℃接近共晶温度（1148℃），位于相图中的奥氏体区。对于含1.5%碳的合金，此时完全处于奥氏体区，且渗碳体完全溶解，组织为单相奥氏体。</p>
+<p><img src="https://cdn.kesci.com/upload/smbiv5kiz2.jpg?imageView2/0/w/960/h/960" alt="铁碳相图"></p>
+<p>22.从奥氏体中析出的渗碳体称为（ B ），从液体中结晶出的渗碳体称为（ A ）。</p>
+<p>A.一次渗碳体 B.二次渗碳体 C.三次渗碳体</p>
+<p>23.08F钢中的平均含碳量为（ A ）。</p>
+<p>A.0.08% B.0.8% C.8%</p>
+<p>优质碳素结构钢必须同时保证化学成分和力学性能。其牌号是采用两位数字表示钢中平均碳的质量分数的万分数（wC×10000）。例如45 钢表示钢中平均碳的质量分数为0. 45%； 08 钢表示钢中平均碳的质量分数为0. 08%。08F中F指的是沸腾钢。</p>
+<p>24．普通，优质和高级优质钢是按钢的（ B ）进行划分的。</p>
+<p>A.力学性能的高低 B.S、P含量的多少 C.Mn、Si含量的多少</p>
+<p>按质量（硫、磷含量）分类，碳素钢可分为：普通碳素钢（wS ≤ 0.035%，wP ≤ 0.035%）、优质碳素钢（wS ≤ 0.030%，wP ≤ 0.030%）和高级优质碳素钢（wS ≤ 0.020%，wP ≤ 0.030%）。</p>
+<p>25．在下列牌号中属于优质碳素结构钢的有（ B ）。</p>
+<p>A.T8A B.08F C.Q235-A·F</p>
+<p>T8A属于碳素工具钢，是工具用钢的一种，不属于优质碳素结构钢；Q235-A·F是普通碳素结构钢，不是优质碳素结构钢；08F属于优质碳素结构钢，含碳量较低，具有良好的塑性和韧性，常用于制造冷冲压件和其他冷加工产品。</p>
+<p>26．在下列牌号中属于工具钢的有（ C ）。</p>
+<p>A.20 B.65Mn C.T10A</p>
+<p>20钢属于低碳钢，是一种碳素结构钢，不属于工具钢。65Mn是一种碳素弹簧钢，主要用于制造弹簧，不属于工具钢。T10A是碳素工具钢，含碳量较高，硬度较大，通常用于制作切削工具和量具等，因此属于工具钢。</p>
+<p>27．选择制造下列零件的材料：冷冲压件（ A ）；齿轮（ B ）；小弹簧（ C ）。</p>
+<p>A.08F B.45 C.65Mn</p>
+<p>08F是一种优质碳素结构钢，具有良好的塑性和韧性，适合用于冷冲压件。45钢是一种中碳钢，具有良好的强度和硬度，常用于制造齿轮等机械零件。65Mn是一种碳素弹簧钢，具有较高的强度和弹性，适合用于制造小弹簧。【PPT2.6.1（2）】</p>
+<h2 id="三、判断题-2"><a href="#三、判断题-2" class="headerlink" title="三、判断题"></a>三、判断题</h2><p>1．在铁碳合金相图中，凡具有E点与F点之间成分的合金缓冷到1148℃时都将发生共晶转变。（ √ ）</p>
+<p>2．铁素体是碳溶解在γ-Fe中所形成的间隙固溶体。 （ x ）</p>
+<p>铁素体是碳溶解在α-Fe（体心立方）中形成的固溶体，而非γ-Fe（奥氏体）。</p>
+<p>3．在铁碳合金相图中，只有共析钢结晶时才发生共析转变，形成共析组织。 （ x）</p>
+<p>4．钢中的含磷量增加，其钢的热脆性增加。 （x）</p>
+<p>磷在钢中主要导致冷脆；硫在钢中形成热脆</p>
+<p>金属发生同素异构转变时要放出热量，转变是在恒温下进行的。 （ x ）</p>
+<p>【加热还是降温？转变方向不同，吸放热不同】</p>
+<p>同素异构转变过程也遵循晶核形成与晶核长大的规律。 （ √ ）</p>
+<p>同素异构转变涉及晶核的形成和长大，与相变过程类似，遵循相同的动力学规律。</p>
+<p>过共析钢结晶的过程是：L→L+A→A→A+Fe3CII→P+Fe3CII。 （ √ ）</p>
+<p>过共析钢结晶过程为：液相→液+奥→奥氏体→奥氏体+渗碳体→珠光体+二次渗碳体。</p>
+<p>8．含碳量为0.15％和0.35％的钢属于亚共析钢，在室温下的组织均由珠光体和铁素体组成，所以它们的力学性能相同。 （x ）</p>
+<p>9．奥氏体是碳溶解在γ-Fe中所形成的置换固溶体。 （ x ）</p>
+<p>10．共析钢结晶的过程是：L→L+A→A→P。 （ √ ）</p>
+<p><img src="https://cdn.kesci.com/upload/smbiwxggjb.jpg?imageView2/0/w/960/h/960" alt="铁碳相图"></p>
+<p>11．亚共析钢结晶的过程是：L→L+A→A→F+A→F+P。 （ √ ）</p>
+<p>12．在缓冷至室温条件下，45钢比20钢的强度和硬度都高。 （ √ ）</p>
+<p>45钢含碳量较高，形成更多的渗碳体，故强度和硬度高于低碳的20钢。【且含碳量小于1.0%，强度不减小】</p>
+<p>碳素工具钢的牌号，如T8、T12，该数字表示钢的最低冲击韧性值。 （ x ）</p>
+<p>工具钢牌号中的数字通常表示含碳量，如T8表示含碳量约0.8%。</p>
+<p>14．在铁碳合金相图中，钢的部分随含碳量的增加，内部组织发生变化，则其塑性和韧性指标随之提高。 （ x ）随着含碳量增加，强度和硬度提高，但塑性和韧性通常下降。</p>
+<p>15．在铁碳合金相图中，奥氏体在1148℃时，溶碳能力可达4.3％。 （ x）</p>
+<p>16．在过共析钢中含碳量越多，则其组织中的珠光体量减少，而铁素体量在增多。（ x ） </p>
+<p>过共析钢中含碳量越多，渗碳体含量增加，铁素体量减少，而珠光体量增加。这是因为多余的碳主要以二次渗碳体的形式析出，而不是形成铁素体。 </p>
+<p>亚共析钢缓冷到室温时，其平衡组织由铁素体和二次渗碳体组成。 （x）</p>
+<p>当亚共析钢缓冷至室温时，其平衡组织是由铁素体（F）和珠光体（P）组成的。珠光体本身是一种两相混合物，由层片状交替排列的铁素体和渗碳体（Fe₃C）组成。</p>
+<p>18．金属化合物一般具有复杂的晶体结构。 （ √ ）</p>
+<p>19．碳在γ-Fe中的溶解度比在α-Fe中的溶解度小。 （ x ）</p>
+<p>20．奥氏体的强度、硬度不高，但具有良好的塑性。 （√）</p>
+<p>21．渗碳体是铁与碳的混合物。 （ x ）</p>
+<p>渗碳体（Fe₃C）是铁与碳的化合物，不是简单的混合物。</p>
+<p>过共晶白口铸铁的室温组织是低温菜氏体加一次渗碳体。 （√）</p>
+<p>一次渗碳体（Fe₃C I）：在液态金属凝固过程中首先析出，通常呈长条状或块状分布在基体中。低温莱氏体（Ld’）：这是过共晶白口铸铁中的典型组织，由珠光体（P）和二次渗碳体（Fe₃C II）组成的共晶体，在缓慢冷却条件下形成。低温莱氏体中的珠光体与亚共析钢中的珠光体相似，都是铁素体和渗碳体的层片状混合物；而其中的二次渗碳体则是在奥氏体转变为珠光体的过程中从剩余奥氏体中析出的。</p>
+<p>23．碳在奥氏体中的溶解度随温度的升高而减小。 （ x ）</p>
+<p>24．渗碳体的性能特点是硬度高、脆性大。 （√）</p>
+<p>25．奥氏体向铁素体的转变是铁发生同素异构转变的结果。 （√）</p>
+<p>26．T10钢的含碳量为10％。 （ x ）</p>
+<p>T10钢中的“10”表示含碳量约1.0%，而非10%。</p>
+<p>27．锰，硅在碳钢中都是有益元素，适当地增加其含量，能提高钢的强度。 （√）</p>
+<p>28．硫是钢中的有益元素，它能使钢的脆性下降。 （ x ）</p>
+<p>29．碳素工具钢都是优质或高级优质钢。 （√ ）</p>
+<p>碳素工具钢的质量要求较高，通常用于制造切削工具、量具等，其对材料的硬度、耐磨性有严格要求，因此大多是优质或高级优质钢。</p>
+<p>碳素工具钢的含碳量一般都大于0.7％。 （√）</p>
+<p>碳素工具钢的含碳量通常较高，一般在0.7%至1.5%之间，以保证足够的硬度和耐磨性。</p>
+<p>铸钢可用于铸造形状复杂面力学性能要求较高的零件。 （√）</p>
+<p>铸铁是一种含碳量较高的铁碳合金，通常用于铸造工艺中。它有多种类型，包括灰铸铁、球墨铸铁、可锻铸铁和白口铸铁等。每种类型的铸铁都有其特定的特性和应用范围。</p>
+<p>灰铸铁：具有良好的铸造性能和减震性，常用于制造形状复杂的零件如发动机缸体、泵壳等，但它的力学性能（尤其是抗拉强度）较低，不适合高应力的应用。</p>
+<p>球墨铸铁：通过在铁水中加入镁或稀土元素进行球化处理而得，它结合了钢的高强度与铸铁的良好铸造性能，适合用来制造要求较高力学性能的复杂零件，例如汽车曲轴、齿轮箱等。</p>
+<p>可锻铸铁：经过热处理后可以得到较好的韧性和延展性，适用于需要一定韧性且形状复杂的零件。</p>
+<p>白口铸铁：硬度高但脆性大，一般不适合作为结构材料使用，但可用于制作耐磨件或者作为生产其他类型铸铁的基础材料。</p>
+<p>综上所述，并不是所有的铸铁都适用于铸造形状复杂且力学性能要求较高的零件。球墨铸铁是一个例外，因为它确实能够满足这种需求。</p>
+<p>32．低碳钢的强度、硬度低，但具有良好的塑性、韧性及焊接性能。 （ √ ）</p>
+<p>33. 碳素弹簧钢的含碳量一般在0.6%以下。 （ x ）</p>
+<p>碳素弹簧钢通常需要较高的强度和弹性，含碳量一般在0.6%至0.9%之间。0.6%以下的含碳量通常不足以提供所需的强度和硬度。</p>
+<h2 id="四、填空题"><a href="#四、填空题" class="headerlink" title="四、填空题"></a>四、填空题</h2><p>1．珠光体是（铁素体）和（ 渗碳体）混合在一起形成的机械混合物。</p>
+<p>2．碳溶解在（α-Fe）中所形成的（间隙固溶体）称为铁素体。</p>
+<p>3．在Fe-Fe3C相图中，共晶点的含碳量为（4.3%），共析点的含碳量为（0.77% ）。</p>
+<p>4．高温莱氏体是（奥氏体）和（渗碳体）组成的机械混合物。</p>
+<p>5. 在Fe-Fe3C相图中，共晶转变温度是（1148℃），共析转变温度是（727℃）。</p>
+<p>6．合金是一种（金属）与（其他金属）或（非金属）通过熔炼或其他方法结合而成的具有（特定性能）的物质。</p>
+<p>7．合金中成分、结构和性能相同的组成部分称为（相）。</p>
+<p>8．铁碳合金的基本组织有五种，它们是（铁素体、奥氏体、渗碳体、珠光体、莱氏体）。</p>
+<p>9．根据溶质原子在溶剂晶格中所处的位置不同，固溶体可分为（置换固溶体）和（间隙固溶体）两种。</p>
+<p>10．莱氏体是（奥氏体）和（渗碳体）的混合物。当温度低于727℃时，莱氏体中的（奥氏体）转变为（珠光体），所以室温下的莱氏体是由（珠光体）和（二次渗碳体）组成，又称为（低温莱氏体）。</p>
+<p>11．共析钢冷却到S点时，会发生共析转变，从奥氏体中同时析出（铁素体）和（渗碳体）的混合物，称为（珠光体）。</p>
+<p>12．在铁碳合金基本组织中属于固溶体的有（铁素体）和（奥氏体），属于金属化合物的是（渗碳体），属于混合物的有（珠光体）和（莱氏体）。</p>
+<p>13．碳在奥氏体中溶解度随温度的不同而变化，在1148℃时碳的溶解度可达（2.11%），在727℃时碳的溶解度为（0.77%）。</p>
+<p>14．铁碳合金相图是表示在缓慢冷却或加热条件下，不同（碳含量(成分)）的铁碳合金或（相或组织）随（温度）变化的图形。</p>
+<p>15．物质在固态下的晶体结构随温度变化的现象称为（同素异构转变）。</p>
+<p>16．含碳量小于（ 2.11% ）的铁碳合金称为钢。根据室温组织不同，钢又分为三类：（亚共析）钢，其室温组织为（珠光体）和（铁素体）;（共析）钢，其室温组织为（珠光体）;（过共析）钢，其室温组织为（珠光体）和（二次渗碳体）。</p>
+<p>17．铁素体的性能特点是具有良好的（塑性）和（韧性），而（强度）和（硬度）很低。</p>
+<p>18．碳素钢是含碳量小于（2.11%），而且不含有（其他）合金元素的铁碳合金。</p>
+<p>19．碳素钢中除铁、碳外，还常有（锰、硅、硫、磷）等元素。其中（锰、硅）是有益元素，（硫、磷）是有害元素。</p>
+<p>20．含碳量小于（0.25%）的钢为低碳钢，含碳量为（0.25%~0.6%）的钢为中碳钢，含碳量大于（0.6%）的钢为高碳钢。</p>
+<p>21. 45钢按用途分类属于（结构）钢，按质量分类属于（优质碳素）钢，按含碳量分类属于（中碳）钢。</p>
+<p>22．T12A钢按用途分类属于（工具）钢，按含碳量分类属于（高碳）钢，按质量分类属于（高级优质碳素钢）。</p>
+<h2 id="五、简答题-1"><a href="#五、简答题-1" class="headerlink" title="五、简答题"></a>五、简答题</h2><p>1．铁碳合金中基本相、基本组织是什么？其力学性能如何？指出哪个是单相组织，哪个是双相混合组织。</p>
+<p>基本相;铁素体、奥氏体，渗碳体、基本组织:铁素体、奥氏体、渗碳体、珠光体、莱氏体。</p>
+<p>铁素体:性能与纯铁相似、强度、硬度低、塑性、韧性好。</p>
+<p>单相组织奥氏体:强度、硬度不高，具有良好的塑性。</p>
+<p>单相组织渗碳体:硬度高、脆性大。塑性几乎为零。单相组织</p>
+<p>珠光体:铁素体和渗碳体性能的平均值，强度较高，硬度适中，具有一定的塑性。两相混合组织。</p>
+<p>莱氏体:与渗碳体性能相似，硬度很高，塑性很差。两相混合组织。</p>
+<p>2．钢中常存的杂质元素对钢的力学性能有何影响？</p>
+<p>钢中的杂质元素主要包括硫（S）、磷（P）、硅（Si）和锰（Mn）等，适量的有益杂质元素（如Si、Mn）能够提升钢的力学性能，而有害杂质元素（如S、P）则会降低钢的力学性能，需要在生产过程中加以控制。</p>
+<p>硫（S）：通常被视为有害元素，增加钢的脆性，易形成硫化物夹杂物，降低塑性和韧性，影响加工性能。</p>
+<p>磷（P）：也是有害元素，增加钢的脆性和热脆性，降低延展性和韧性。</p>
+<p>硅（Si）：作为有益元素，硅可以提高钢的强度和硬度，同时增强氧化保护层，改善脱氧效果。</p>
+<p>锰（Mn）：有益元素，锰能够固溶强化，提高钢的强度和硬度，改善淬透性，同时抑制硫的有害作用。</p>
+<p>有硫、磷、硅、锰。其中硅、锰是有益元素，提高钢的强度，并能降低钢的脆性硫、磷是有害元素，硫使钢产生热脆性，磷使钢产生冷脆性</p>
+<p>3．根据Fe-Fe3C合金相图，说明产生下列现象的原因。</p>
+<p>（1）含碳量1.0％的铁碳合金比含碳量0.5％的铁碳合金的硬度高。</p>
+<p>解：含碳量1.0%的铁碳合金含有更多的渗碳体（Fe₃C），渗碳体硬度高，增加了整体硬度。此外，渗碳体的存在阻碍了位错运动，提高了材料的强度和硬度。</p>
+<p>一般要把钢材加热到1000℃~1250℃高温下进行锻轧加工。</p>
+<p>解：加热到1000℃~1250℃，钢材处于奥氏体区，奥氏体具有较好的塑性和延展性，便于锻轧加工。此外，高温下钢材的晶粒细化，有助于提高加工性和最终力学性能。</p>
+<p>靠近共晶成分的铁碳合金的铸造性能好。</p>
+<p>解：靠近共晶成分的铁碳合金在铸造时形成细小均匀的珠光体结构，流动性好，收缩应力小，减少了裂纹和缺陷，因而铸造性能较好。</p>
+<p>答案：</p>
+<p>(1)含碳量1.0%的铁碳合金的组织是珠光体和碳体;含碳量0.5%的铁碳合金的组织是铁素体和珠光体。渗碳体比铁素体硬度高。</p>
+<p>(2)在这一温度下，钢的组织是奥氏体塑性好，有利于锻轧加工。</p>
+<p>(3)靠近共晶成分的铁碳合金熔点低、凝固温度区间较小，流动性好、偏析现象小，所以铸造性能好。</p>
+<p>随着含碳量的增加，钢的组织和性能如何变化？</p>
+<p>随着含碳量的增加，钢的组织和性能发生以下变化：</p>
+<p>组织变化：</p>
+<p>低碳钢（&lt;0.25%）：主要组织为铁素体，具有良好的塑性和韧性。</p>
+<p>中碳钢（0.25%-0.6%）：组织为铁素体和珠光体，力学性能有所提升。</p>
+<p>高碳钢（&gt;0.6%）：组织包含更多的渗碳体，硬度和强度显著增加，但塑性和韧性下降。</p>
+<p>性能变化：</p>
+<p>强度和硬度：随着含碳量增加，钢的强度和硬度提高。</p>
+<p>塑性和韧性：含碳量增加导致塑性和韧性下降，材料变得更脆。</p>
+<p>耐磨性：高碳钢由于渗碳体含量高，耐磨性显著增强。</p>
+<p>加工性能：低碳钢易于加工和成形，高碳钢加工难度增大。</p>
+<p>答案:随着含碳量的增加，组织中铁素体逐渐减少，渗碳体逐渐增加，钢的性能变化强度硬度逐渐增加，塑性、韧性逐渐下降，当含碳量大于1.0%时，将出现二次析出的网状渗碳体，使钢的脆性增加。</p>
+<p>5．硫，磷元素的含量为什么在碳钢中要产格控制，而在易切削钢中又要适当提高？</p>
+<p>在碳钢中严格控制硫、磷含量：</p>
+<p>硫（S）和磷（P）是有害元素，会导致钢的脆性增加，降低塑性和韧性。</p>
+<p>这些元素易形成硫化物和磷化物夹杂物，影响钢的力学性能和加工性能。</p>
+<p>严格控制其含量是为了保证碳钢的高强度和良好的综合力学性能。</p>
+<p>在易切削钢中适当提高硫、磷含量：</p>
+<p> - 适量的硫可以形成硫化物，起到润滑作用，改善钢的切削性能，减少加工中的摩擦和粘结。</p>
+<p> - 磷在一定范围内提高钢的抗切削热性，增强钢的韧性和耐磨性。</p>
+<p> - 因此，在易切削钢中，适当增加硫、磷含量有利于提高其加工性能。</p>
+<p>答案:硫，磷是有害元素，硫使钢产生热脆性，磷使钢产生冷脆性，所以在碳钢中要严格控制硫磷的含量。在易切削钢中适当提高硫磷的含量，起到断的作用，提高切削加工性能。</p>
+<h2 id="六、识别并分析钢号"><a href="#六、识别并分析钢号" class="headerlink" title="六、识别并分析钢号"></a>六、识别并分析钢号</h2><p>1. 08F: 含碳量约0.08%的低碳沸腾钢</p>
+<p>08F表示含碳量约为0.8%的低碳钢。“F”代表沸腾钢，适用于冷加工，如冷冲压件。适用于制造需要良好塑性和成形性的零件。</p>
+<p>2. 45：含碳量约0.45%的中碳钢</p>
+<p>45钢是一种中碳钢，含碳量约为0.45%。该钢具有良好的强度和硬度，适用于制造机械零件，如齿轮、轴类等，45钢属于普通碳素结构钢。</p>
+<p>3. 65Mn：含碳量约0.65%、含锰0.15%的弹簧钢</p>
+<p>65Mn是含有约0.65%碳和1.0%锰的合金钢。锰的添加提高了钢的强度、韧性和淬透性。适用于制造弹簧、小齿轮等需要高强度和韧性的零件。</p>
+<p>4. T12A：高级优质碳素工具钢</p>
+<p>T12A是一种工具钢。字母“T”表示工具钢，数字“12”表示含碳量约1.2%。“A”表示质量等级为A。</p>
+<p>适用于制造模具、切削工具等需要高硬度和耐磨性的工具。</p>
+<p>5. ZG340-640：</p>
+<p>ZG340-640属于焊接钢。字母“ZG”表示焊接用钢，“340”表示最小屈服强度为340MPa，“640”表示抗拉强度为640MPa。适用于制造需要焊接的结构件，如桥梁、建筑结构等。</p>
+<p>6. Q235-A·F：屈服强度为235MPa含碳量约0.235%的A级沸腾钢。</p>
+<p>Q235-A·F是常用的碳素结构钢。Q表示屈服强度，235表示最小屈服强度为235MPa。“A”表示质量等级为A。“F”代表沸腾钢。适用于制造结构件、机械零件等，具有良好的焊接性和成形性。</p>
+<p>1.08F:碳含量为 8&#x2F;10000即0.08%的低碳钢，沸腾钢种</p>
+<p>2.45:俗称 45 号钢，碳含量为 0.45%的钢，中碳钢，结构钢:</p>
+<p>3.65Mn:弹簧钢，碳含量0.62%~0.70%，高碳钢</p>
+<p>4.T12A:工具钢，碳含量12&#x2F;1000，即1.2%，A级优质钢</p>
+<p>5.ZG340-640:铸钢，最小屈服强度340MPa，最小抗拉强度640MPa，</p>
+<p>6.Q235-A·F:屈服强度为235MPa的A级沸腾普通碳素结构钢</p>
+<p><img src="https://cdn.kesci.com/upload/smbiyceejc.jpg?imageView2/0/w/960/h/960" alt="铁碳相图绘制流程"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://weyumm.github.io">Zhanghengzhen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://weyumm.github.io/2024/11/02/3,%E6%9C%BA%E6%A2%B0%E5%B7%A5%E7%A8%8B%E6%9D%90%E6%96%99%E7%AC%94%E8%AE%B0/">http://weyumm.github.io/2024/11/02/3,%E6%9C%BA%E6%A2%B0%E5%B7%A5%E7%A8%8B%E6%9D%90%E6%96%99%E7%AC%94%E8%AE%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://weyumm.github.io" target="_blank">Weyumm的博客</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/article002/cover002.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="prev-post pull-left" href="/2024/11/05/4,JadeAppreciation/" title="【玉石鉴赏】课程作业小游戏"><img class="cover" src="/img/article003/wenquetang.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">【玉石鉴赏】课程作业小游戏</div></div></a><a class="next-post pull-right" href="/2024/10/15/2,2024LLMs%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E8%AE%B2%E5%BA%A7/" title="2024LLMs与数据科学讲座"><img class="cover" src="/img/article001/cover001.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">2024LLMs与数据科学讲座</div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div class="comment-switch"><span class="first-comment">Giscus</span><span id="switch-btn"></span><span class="second-comment">Twikoo</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Zhanghengzhen</div><div class="author-info-description">雄关漫道真如铁，而今迈步从头越。 险就一身乾坤精，我心依旧望苍天。</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/weyumm"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">我来问道无余说，云在青天水在瓶。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#A1-%E6%9C%BA%E6%A2%B0%E9%9B%B6%E4%BB%B6%E7%9A%84%E5%A4%B1%E6%95%88%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">A1-机械零件的失效分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%80%89%E6%8B%A9%E9%A2%98"><span class="toc-number">1.1.</span> <span class="toc-text">一、选择题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%A1%AB%E7%A9%BA%E9%A2%98"><span class="toc-number">1.2.</span> <span class="toc-text">二、填空题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%88%A4%E6%96%AD%E9%A2%98"><span class="toc-number">1.3.</span> <span class="toc-text">三、判断题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%AE%A1%E7%AE%97%E9%A2%98"><span class="toc-number">1.4.</span> <span class="toc-text">四、计算题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E7%AE%80%E7%AD%94%E9%A2%98"><span class="toc-number">1.5.</span> <span class="toc-text">五、简答题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#A2-%E9%87%91%E5%B1%9E%E7%9A%84%E6%99%B6%E4%BD%93%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BB%93%E6%99%B6%E4%B9%A0%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">A2-金属的晶体结构与结晶习题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%80%89%E6%8B%A9%E9%A2%98-1"><span class="toc-number">2.1.</span> <span class="toc-text">一、选择题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%A1%AB%E7%A9%BA%E9%A2%98-1"><span class="toc-number">2.2.</span> <span class="toc-text">二、填空题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%88%A4%E6%96%AD%E9%A2%98-1"><span class="toc-number">2.2.1.</span> <span class="toc-text">三、判断题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E7%AE%80%E7%AD%94%E9%A2%98"><span class="toc-number">2.3.</span> <span class="toc-text">四、简答题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#A3-%E9%93%81%E7%A2%B3%E7%9B%B8%E5%9B%BE"><span class="toc-number">3.</span> <span class="toc-text">A3- 铁碳相图</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%80%89%E6%8B%A9%E9%A2%98-2"><span class="toc-number">3.1.</span> <span class="toc-text">一、选择题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%88%A4%E6%96%AD%E9%A2%98-2"><span class="toc-number">3.2.</span> <span class="toc-text">三、判断题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%A1%AB%E7%A9%BA%E9%A2%98"><span class="toc-number">3.3.</span> <span class="toc-text">四、填空题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E7%AE%80%E7%AD%94%E9%A2%98-1"><span class="toc-number">3.4.</span> <span class="toc-text">五、简答题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E8%AF%86%E5%88%AB%E5%B9%B6%E5%88%86%E6%9E%90%E9%92%A2%E5%8F%B7"><span class="toc-number">3.5.</span> <span class="toc-text">六、识别并分析钢号</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/11/05/5-cailiaolixue/" title="【欧姆漫画】材料力学"><img src="/img/article004/cover004.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【欧姆漫画】材料力学"/></a><div class="content"><a class="title" href="/2024/11/05/5-cailiaolixue/" title="【欧姆漫画】材料力学">【欧姆漫画】材料力学</a><time datetime="2024-11-05T13:14:48.000Z" title="发表于 2024-11-05 21:14:48">2024-11-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/11/05/4,JadeAppreciation/" title="【玉石鉴赏】课程作业小游戏"><img src="/img/article003/wenquetang.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【玉石鉴赏】课程作业小游戏"/></a><div class="content"><a class="title" href="/2024/11/05/4,JadeAppreciation/" title="【玉石鉴赏】课程作业小游戏">【玉石鉴赏】课程作业小游戏</a><time datetime="2024-11-05T10:19:24.000Z" title="发表于 2024-11-05 18:19:24">2024-11-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/11/02/3,%E6%9C%BA%E6%A2%B0%E5%B7%A5%E7%A8%8B%E6%9D%90%E6%96%99%E7%AC%94%E8%AE%B0/" title="【千工万材】机械工程材料笔记"><img src="/img/article002/cover002.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【千工万材】机械工程材料笔记"/></a><div class="content"><a class="title" href="/2024/11/02/3,%E6%9C%BA%E6%A2%B0%E5%B7%A5%E7%A8%8B%E6%9D%90%E6%96%99%E7%AC%94%E8%AE%B0/" title="【千工万材】机械工程材料笔记">【千工万材】机械工程材料笔记</a><time datetime="2024-11-02T08:11:10.000Z" title="发表于 2024-11-02 16:11:10">2024-11-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/15/2,2024LLMs%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E8%AE%B2%E5%BA%A7/" title="2024LLMs与数据科学讲座"><img src="/img/article001/cover001.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="2024LLMs与数据科学讲座"/></a><div class="content"><a class="title" href="/2024/10/15/2,2024LLMs%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E8%AE%B2%E5%BA%A7/" title="2024LLMs与数据科学讲座">2024LLMs与数据科学讲座</a><time datetime="2024-10-15T09:25:17.000Z" title="发表于 2024-10-15 17:25:17">2024-10-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/10/14/1,hello-world/" title="Hello World"><img src="/img/scenery-beauty1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/2024/10/14/1,hello-world/" title="Hello World">Hello World</a><time datetime="2024-10-14T09:32:32.476Z" title="发表于 2024-10-14 17:32:32">2024-10-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2024 By Zhanghengzhen</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const abcjsInit = () => {
+    const abcjsFn = () => {
+      document.querySelectorAll(".abc-music-sheet").forEach(ele => {
+        if (ele.children.length > 0) return
+        ABCJS.renderAbc(ele, ele.innerHTML, {responsive: 'resize'})
+      })
+    }
+    
+    typeof ABCJS === 'object' ? abcjsFn()
+      : btf.getScript('https://cdn.jsdelivr.net/npm/abcjs/dist/abcjs-basic-min.min.js').then(abcjsFn)
+  }
+
+  window.pjax ? abcjsInit() : window.addEventListener('load', abcjsInit)
+  btf.addGlobalFn('encrypt', abcjsInit, 'abcjs')
+})()</script><script>(()=>{
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const loadGiscus = () => {
+    const config = Object.assign({
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'weyumm/weyumm.github.io',
+      'data-repo-id': 'R_kgDOM_75Cw',
+      'data-category-id': 'DIC_kwDOM_75C84Cj6i4',
+      'data-mapping': 'pathname',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true
+    },null)
+
+    const ele = document.createElement('script')
+    for (let key in config) {
+      ele.setAttribute(key, config[key])
+    }
+    document.getElementById('giscus-wrap').appendChild(ele)
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if ('Giscus' === 'Giscus' || !true) {
+    if (true) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment= loadGiscus
+  }
+})()</script><script>(() => {
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://twikoo-omega-sand.vercel.app',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://twikoo-omega-sand.vercel.app',
+      region: '',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+
+    
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') setTimeout(init,0)
+    else btf.getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(init)
+  }
+
+  if ('Giscus' === 'Twikoo' || !true) {
+    if (true) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="8152976493" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    if(parent_div_git) {
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var qweather_key = 'a3fe56f0e6344002a30d8012228d0ebb';
+  var gaud_map_key = '9ecdfd407cb42f5df8d4d2e6c3bd04d2';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '112.982279,28.19409';
+  var clock_default_rectangle_enable = 'false';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>
