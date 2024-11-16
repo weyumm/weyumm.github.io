@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>玉石游戏开发</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 主容器，设置为 flexbox 布局 -->
+<div id="mainContainer">
+    <!-- 玉石诗句生成器部分 -->
+    <div id="narrationGenerator">
+        <h2>《玉·言》</h2>
+        <p class="introduction">于此，您可借助Markov链的算法艺术，感受文字与玉石的完美融合。</p>
+        <p id="gemInfom">按【签名】按钮，获取文艺小段。</p>
+        <button id="generate-btn">生成签名</button>
+        <div id="narration"></div>
+    </div>
+
+    <!-- 走格子游戏部分 -->
+    <div id="gameContainer">
+        <h2>《玉·游》</h2>
+        <p class="introduction">体验一场关于玉石的走格子游戏，探索未知的神秘世界。</p>
+        <p id="gemInfom">初次游玩，请多次点按↑←↓→唤起游戏。</p>
+        <div class="gameContent">
+            <canvas id="gameCanvas" width="600" height="600"></canvas>
+        </div>
+    </div>
+
+    <!-- 玉石科普部分 -->
+    <div id="rightPanel">
+        <h2>《玉·语》</h2>
+        <p class="introduction">了解玉石的历史与文化，探索其背后的科学知识。</p>
+        <p id="gemInfo">按【科普】按钮，获取玉石科普。</p>
+        <button onclick="randomGemFact()">玉石科普</button>
+        <div id="gemFact"></div> <!-- 新增的科普内容显示区域 -->
+    </div>
+</div>
+
+<!-- 右侧红色控制按钮 -->
+<div id="controlButtons">
+    <button id="player1Up">↑</button>
+    <button id="player1Left">←</button>
+    <button id="player1Right">→</button>
+    <button id="player1Down">↓</button>
+</div>
+
+<!-- 左侧蓝色控制按钮 -->
+<div id="leftControlButtons">
+    <button id="player2Up">↑</button>
+    <button id="player2Left">←</button>
+    <button id="player2Right">→</button>
+    <button id="player2Down">↓</button>
+</div>
+
+<!-- 事件弹窗 -->
+<div id="eventPopup">
+    <h2 id="eventTitle">事件：开始游戏吧</h2>
+    <p id="eventDescription">按【重来】再次游玩</p>
+    <img id="eventImage" alt="事件图片" style="width: 100%; height: auto; margin-top: 10px;">
+    <button onclick="retryGame()">重来</button>
+    <button onclick="continueGame()">继续</button>
+</div>
+
+<script src="game.js"></script>
+<script src="Markov.js"></script> <!-- 引入 Narration生成器的脚本 -->
+</body>
+</html>
