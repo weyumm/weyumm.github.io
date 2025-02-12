@@ -2,9 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://weyumm.github.io/2024/11/05/5-cailiaolixue/</loc>
+    <loc>http://weyumm.github.io/2024/11/05/5,cailiaolixue/</loc>
     
-    <lastmod>2024-11-05</lastmod>
+    <lastmod>2025-02-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://weyumm.github.io/2025/02/12/6-%E6%9D%BF%E5%87%B3%E9%BE%99%E9%97%B9%E5%85%83%E5%AE%B5/</loc>
+    
+    <lastmod>2025-02-12</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -76,7 +85,7 @@
 
   <url>
     <loc>http://weyumm.github.io/</loc>
-    <lastmod>2024-11-16</lastmod>
+    <lastmod>2025-02-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
